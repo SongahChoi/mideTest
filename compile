@@ -23,7 +23,8 @@ def compile():
                 global compileName
                 compileName = fileName.replace(".py",".pyc")
                 subprocess.Popen("mv %s ./" %compileName, stdout=subprocess.PIPE, shell=True)
-                
+        print "path: %s, dirs: %s, files: %s" %(path,dirs,files)
+        
 def svnAdd(cmd):
         add = subprocess.Popen(cmd_add , stdout=subprocess.PIPE, shell=True)
         return add.stdout
@@ -49,6 +50,7 @@ for add_line in add_stdout.readlines():
 
 # svn commit 적용
 cmd_commit = "svn commit -m %s" %compileName
+print "커밋메세지: " , cmd_commit
 commit_stdout = svnCommit(cmd_commit)
 for commit_line in commit_stdout.readlines():
         print commit_line
