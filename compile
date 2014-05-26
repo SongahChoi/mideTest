@@ -6,14 +6,6 @@ import subprocess
 def gitPull(cmd):
         pull = subprocess.Popen(cmd_pull , stdout=subprocess.PIPE, shell=True)
         return pull.stdout
-'''
-def compile():
-        files = glob.glob('*.py')
-        for x in files:
-                if not os.path.isdir(x):
-                        py_compile.compile(x)
-                        print 'compile %s to %s .pyc' %(x,x)
-'''
 
 def compile():
     pwd = './'
@@ -28,8 +20,6 @@ def compile():
                 compileName = fileName.replace(".py",".pyc")
                 subprocess.Popen("mv %s ./" %compileName, stdout=subprocess.PIPE, shell=True)
                 
-            print file
-
 def svnAdd(cmd):
         add = subprocess.Popen(cmd_add , stdout=subprocess.PIPE, shell=True)
         return add.stdout
@@ -38,19 +28,22 @@ def svnCommit(cmd):
         commit = subprocess.Popen(cmd_commit , stdout=subprocess.PIPE, shell=True)
         return commit.stdout
 
-
+# gitHub에서 데이터가져오기
 cmd_pull = "git pull"
 pull_stdout = gitPull(cmd_pull)
 for pull_line in pull_stdout.readlines():
         print pull_line
 
+# 하위폴더 검색 후 컴파일
 compile()
 
+# svn에 배포
 cmd_add = "svn add *.pyc"
 add_stdout = svnAdd(cmd_add)
 for add_line in add_stdout.readlines():
         print add_line
 
+# svn commit 적용
 cmd_commit = "svn commit -m ''"
 commit_stdout = svnCommit(cmd_commit)
 for commit_line in commit_stdout.readlines():
