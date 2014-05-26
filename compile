@@ -13,17 +13,26 @@ def gitPull(cmd):
 def compile():
     pwd = './'
     for path,dirs,files in os.walk(pwd):
-        exceptList = ["ServerSetup", "Admin", ".git", ".svn"]
+    
+        if ".svn" in dirs:
+            dirs.remove(".svn")
+        else if ".git" in dirs:
+            dirs.remove(".git")
+            
+        exceptList = ["ServerSetup", "Admin"]
         dirs[:] = [dir for dir in dirs if dir not in exceptList]
+
         for file in files:
             if os.path.splitext(file)[1] == ".py":
                 fileName = path + "/" + file
                 py_compile.compile(fileName)
                 print "compile:", file
                 
-                global compileName
                 compileName = fileName.replace(".py",".pyc")
                 subprocess.Popen("mv %s ./" %compileName, stdout=subprocess.PIPE, shell=True)
+                global compileList = []
+                compileList.append(compileName)
+                
         print "path: %s, dirs: %s, files: %s" %(path,dirs,files)
         
 def svnAdd(cmd):
@@ -50,7 +59,7 @@ for add_line in add_stdout.readlines():
         print add_line
 
 # svn commit 적용
-cmd_commit = "svn commit -m %s" %compileName
+cmd_commit = "svn commit -m %s" %compileList
 print "커밋메세지: " , cmd_commit
 commit_stdout = svnCommit(cmd_commit)
 for commit_line in commit_stdout.readlines():
