@@ -1,6 +1,5 @@
 #!/bin/env python
 #-*- coding: utf-8 -*-
-
 import py_compile
 import glob
 import os.path
@@ -59,7 +58,7 @@ for add_line in add_stdout.readlines():
 
 # svn commit 적용
 cmd_commit = "svn commit -m %s" %add_stdout
-print "커밋메세지: " , cmd_commit
+#print "커밋메세지: " , cmd_commit
 commit_stdout = svnCommit(cmd_commit)
 for commit_line in commit_stdout.readlines():
         print "<svn commit>\n", commit_line
