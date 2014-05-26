@@ -26,15 +26,12 @@ def compile():
             if os.path.splitext(file)[1] == ".py":
                 fileName = path + "/" + file
                 py_compile.compile(fileName)
-                print "compile:", file
+                print "--COMPILE: ", file
                 
                 compileName = fileName.replace(".py",".pyc")
                 subprocess.Popen("mv %s ./" %compileName, stdout=subprocess.PIPE, shell=True)
-                #global compileList
-                #compileList = []
-                #compileList.append(compileName)
                 
-        print "path: %s, dirs: %s, files: %s" %(path,dirs,files)
+        #print "path: %s, dirs: %s, files: %s" %(path,dirs,files)
         
 def svnAdd(cmd):
         add = subprocess.Popen(cmd_add , stdout=subprocess.PIPE, shell=True)
@@ -48,7 +45,7 @@ def svnCommit(cmd):
 cmd_pull = "git pull"
 pull_stdout = gitPull(cmd_pull)
 for pull_line in pull_stdout.readlines():
-        print pull_line
+        print "<git pull>\n", pull_line
 
 # 하위폴더 검색 후 컴파일
 compile()
@@ -57,11 +54,11 @@ compile()
 cmd_add = "svn add *.pyc"
 add_stdout = svnAdd(cmd_add)
 for add_line in add_stdout.readlines():
-        print add_line
+        print "<svn add>\n", add_line
 
 # svn commit 적용
 cmd_commit = "svn commit -m %s" %add_stdout
 print "커밋메세지: " , cmd_commit
 commit_stdout = svnCommit(cmd_commit)
 for commit_line in commit_stdout.readlines():
-        print commit_line
+        print "<svn commit>\n", commit_line
