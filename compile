@@ -18,6 +18,9 @@ def compile():
             dirs.remove(".git") 
         elif ".svn" in dirs:
             dirs.remove(".svn")
+        else:
+            pass
+
     
         exceptList = ["ServerSetup", "Admin"]
         dirs[:] = [dir for dir in dirs if dir not in exceptList]
