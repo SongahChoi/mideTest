@@ -13,7 +13,8 @@ def gitPull(cmd):
 def compile():
     pwd = './'
     for path,dirs,files in os.walk(pwd):
-        dirs[:] = [dir for dir in dirs if dir != "ServerSetup"]
+        exceptList = ["ServerSetup", "Admin", ".git", ".svn"]
+        dirs[:] = [dir for dir in dirs if dir not in exceptList]
         for file in files:
             if os.path.splitext(file)[1] == ".py":
                 fileName = path + "/" + file
