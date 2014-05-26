@@ -21,11 +21,12 @@ def compile():
         dirs[:] = [dir for dir in dirs if dir != "ServerSetup"]
         for file in files:
             if os.path.splitext(file)[1] == ".py":
-                filename = path + "/" + file
-                cmpFile = py_compile.compile(filename)
-                print "compile:", file, "to ", cmpFile
+                fileName = path + "/" + file
+                py_compile.compile(fileName)
+                print "compile:", file
                 
-                subprocess.Popen("mv %s ./" %filename, stdout=subprocess.PIPE, shell=True)
+                compileName = fileName.replace(".py",".pyc")
+                subprocess.Popen("mv %s ./" %compileName, stdout=subprocess.PIPE, shell=True)
                 
             print file
 
