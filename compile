@@ -13,12 +13,10 @@ def gitPull(cmd):
 def compile():
     pwd = './'
     for path,dirs,files in os.walk(pwd):
-    
         if ".svn" in dirs:
             dirs.remove(".svn")
         else if ".git" in dirs:
             dirs.remove(".git")
-            
         exceptList = ["ServerSetup", "Admin"]
         dirs[:] = [dir for dir in dirs if dir not in exceptList]
 
