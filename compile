@@ -24,6 +24,9 @@ def compile():
                 filename = path + "/" + file
                 cmpFile = py_compile.compile(filename)
                 print "compile:", file, "to ", cmpFile
+                
+                subprocess.Popen("mv %s ./" %filename, stdout=subprocess.PIPE, shell=True)
+                
             print file
 
 def svnAdd(cmd):
