@@ -1,5 +1,6 @@
 #!/bin/env python
 #-*- coding: utf-8 -*-
+
 import py_compile
 import glob
 import os.path
