@@ -30,7 +30,7 @@ def compile():
                 
                 compileName = fileName.replace(".py",".pyc")
                 subprocess.Popen("mv %s ./" %compileName, stdout=subprocess.PIPE, shell=True)
-                global compileList = []
+                global compileList[]
                 compileList.append(compileName)
                 
         print "path: %s, dirs: %s, files: %s" %(path,dirs,files)
