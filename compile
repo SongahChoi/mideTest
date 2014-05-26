@@ -13,12 +13,13 @@ def gitPull(cmd):
 def compile():
     pwd = './'
     for path,dirs,files in os.walk(pwd):
-    
+        # 숨김파일 제거
         if ".git" in dirs:
             dirs.remove(".git") 
         if ".svn" in dirs:
             dirs.remove(".svn")
 
+        #탐색하지 않을 폴더
         exceptList = ["ServerSetup", "Admin"]
         dirs[:] = [dir for dir in dirs if dir not in exceptList]
 
