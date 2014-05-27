@@ -88,7 +88,7 @@ if existNew:
                 print "<svn add>\n", add_line
         
         # svn commit 적용
-        cmd_commit = "svn commit -m %s" %
+        cmd_commit = "svn commit -m %s" %add_stdout
         commit_stdout = svnCommit(cmd_commit)
         for commit_line in commit_stdout.readlines():
                 print commit_line
