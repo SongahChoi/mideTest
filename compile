@@ -8,10 +8,16 @@ import subprocess
 
 global existpy
 existpy = False
+global modified
+modified = False
 
 def gitPull(cmd):
         pull = subprocess.Popen(cmd_pull , stdout=subprocess.PIPE, shell=True)
         return pull.stdout
+
+def gitStatus(cmd):
+        status = subprocess.Popen(cmd_status , stdout=subprocess.PIPE, shell=True)
+        return status.stdout
 
 def compile():
     pwd = './'
@@ -52,6 +58,13 @@ cmd_pull = "git pull"
 pull_stdout = gitPull(cmd_pull)
 for pull_line in pull_stdout.readlines():
         print "<git pull>\n", pull_line
+        
+# git 상태 보기
+cmd_status = "git status"
+status_stdout = gitStatus(cmd_status)
+for status_line in status_stdout.readlines():
+        if status_line == '':
+                modified = True
 
 # 하위폴더 검색 후 컴파일
 compile()
