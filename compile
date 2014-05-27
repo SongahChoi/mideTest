@@ -6,6 +6,9 @@ import glob
 import os.path
 import subprocess
 
+global existpy
+existpy = False
+
 def gitPull(cmd):
         pull = subprocess.Popen(cmd_pull , stdout=subprocess.PIPE, shell=True)
         return pull.stdout
@@ -32,6 +35,8 @@ def compile():
                 compileName = fileName.replace(".py",".pyc")
                 subprocess.Popen("mv %s ./" %compileName, stdout=subprocess.PIPE, shell=True)
                 
+                # py파일이 있을경우 True
+                existpy = True
         #print "path: %s, dirs: %s, files: %s" %(path,dirs,files)
         
 def svnAdd(cmd):
@@ -51,15 +56,19 @@ for pull_line in pull_stdout.readlines():
 # 하위폴더 검색 후 컴파일
 compile()
 
-# svn에 배포
-cmd_add = "svn add *.pyc"
-add_stdout = svnAdd(cmd_add)
-for add_line in add_stdout.readlines():
-        print "<svn add>\n", add_line
+if existpy:
+        # svn에 배포
+        cmd_add = "svn add *.pyc"
+        add_stdout = svnAdd(cmd_add)
+        for add_line in add_stdout.readlines():
+                print "<svn add>\n", add_line
 
-# svn commit 적용
-cmd_commit = "svn commit -m %s" %add_stdout
-#print "커밋메세지: " , cmd_commit
-commit_stdout = svnCommit(cmd_commit)
-for commit_line in commit_stdout.readlines():
-        print "<svn commit>\n", commit_line
+        # svn commit 적용
+        cmd_commit = "svn commit -m %s" %add_stdout
+        #print "커밋메세지: " , cmd_commit
+        commit_stdout = svnCommit(cmd_commit)
+        for commit_line in commit_stdout.readlines():
+                print "<svn commit>\n", commit_line
+
+        # 컴파일한 파일 삭제
+        subprocess.Popen("rm -rfv *.pyc" , stdout=subprocess.PIPE, shell=True)
