@@ -57,7 +57,7 @@ cmd_pull = "git pull"
 pull_stdout = gitPull(cmd_pull)
 for pull_line in pull_stdout.readline():
         print pull_line
-        pull = pull_line.split(' ').strip()
+        pull = pull_line.strip().split(' ')
         if pull[0] == 'Updating':
                 existUpdt = True
         else:
