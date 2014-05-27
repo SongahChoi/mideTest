@@ -9,3 +9,6 @@ for i in range(0, 1000) :
 	csv.put(cur_time, "%s,%05d,test,data" % (cur_time, i))
 	time.sleep(0.1)
 csv.Close()
+
+
+#test
