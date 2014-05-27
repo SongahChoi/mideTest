@@ -86,6 +86,7 @@ if existUpdt:
                         print "svn commit modi" #############
                         for commit_line in commit_stdout.readlines():
                                 print commit_line
+                        break
                 else:
                         print 'M X' ##############
                         existNew = True
