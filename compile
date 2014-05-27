@@ -57,7 +57,7 @@ cmd_pull = "git pull"
 pull_stdout = gitPull(cmd_pull)
 for pull_line in pull_stdout.readlines():
         print pull_line
-        pull = pull_line.split(' ')
+        pull = pull_line
         print pull ############
         if pull[0] == 'Updating':
                 print pull[0] #############
@@ -68,8 +68,8 @@ for pull_line in pull_stdout.readlines():
      
 if existUpdt:
         # 하위폴더 검색 후 컴파일
+        print "컴파일을 진행합니다.."
         compile()
-        print "compile()" ############
         
         # svn 상태 보기
         cmd_status = "svn status"
