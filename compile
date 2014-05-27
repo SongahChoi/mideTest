@@ -59,10 +59,8 @@ for pull_line in pull_stdout.readlines():
         print pull_line
         pull = pull_line.split(' ')
         print "----------git pull------------"   ###########
-        print pull  ###########
-        if pull[0] == 'Updating':
-                print "-----------search Updating(pull[0])------------"  ###########
-                print pull[0] ############
+        if pull[0] == '*.py':
+                print "-----------search Updating------------"  ###########
                 existUpdt = True
                 break
         else:
@@ -82,8 +80,7 @@ if existUpdt:
                 print "stat: ", stat ##############
                 if stat[0] == 'M':
                         existNew = False
-                        print "-----------search 'Modified'(stat[0])-------------"  ###########
-                        print stat[0] ##############
+                        print "-----------search 'Modified'-------------"  ###########
                         
                         # svn commit 적용
                         cmd_commit = "svn commit -m %s modified" %status_stdout
