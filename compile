@@ -55,7 +55,7 @@ def svnCommit(cmd):
 # gitHub에서 데이터가져오기
 cmd_pull = "git pull"
 pull_stdout = gitPull(cmd_pull)
-for pull_line in pull_stdout.readlines():
+for pull_line in pull_stdout.readline():
         print pull_line
         if (pull_line.strip().split(' '))[0] == 'Updating':
                 existUpdt = True
@@ -69,7 +69,7 @@ if existUpdt:
         # svn 상태 보기
         cmd_status = "svn status"
         status_stdout = svnStatus(cmd_status)
-        for status_line in status_stdout.readlines():
+        for status_line in status_stdout.readline():
                 stat = status_line.strip().split(' ')
                 if stat[0] == 'M':
                         # svn commit 적용
