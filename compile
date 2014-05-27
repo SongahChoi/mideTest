@@ -76,8 +76,7 @@ if existUpdt:
         print "------------svn status--------------"  
         for status_line in status_stdout.readlines():
                 stat = status_line.split(' ')
-                print "stat[7]: ", stat[7] ##############
-                print stat[7]=="*.pyc"
+                #print "stat[0]: ", stat ##############
                 if stat[0] == 'M':
                         existNew = False
 
