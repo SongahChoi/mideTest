@@ -56,9 +56,10 @@ def svnCommit(cmd):
 cmd_pull = "git pull"
 pull_stdout = gitPull(cmd_pull)
 for pull_line in pull_stdout.readlines():
-        print "pull_line: ",pull_line ############
-        if pull_line[0] == 'Updating':
-                print pull_line[0] #############
+        print pull_line
+        pull = pull_line.split(' ')
+        if pull[0] == 'Updating':
+                print pull[0] ############
                 existUpdt = True
                 break
         else:
@@ -74,9 +75,10 @@ if existUpdt:
         status_stdout = svnStatus(cmd_status)
         print "svn status"  ##############
         for status_line in status_stdout.readlines():
-                print "status_line: ", status_line  ##############
+                stat = status_line.split(' ')
+                print "stat: ", stat ##############
                 if stat[0] == 'M':
-                        print "status_line[0]: ", status_line[0] ##############
+                        print "stat[0]': ", stat[0] ##############
                         # svn commit 적용
                         cmd_commit = "svn commit -m %s modified" %status_stdout
                         commit_stdout = svnCommit(cmd_commit)
