@@ -59,7 +59,6 @@ for pull_line in pull_stdout.readlines():
         print pull_line
         pull = pull_line.split(' ')
         print "----------git pull------------"   ###########
-        print "pull[0]: ",pull[0]  ################
         if pull[0] == 'Updating':
                 print "-----------search Updating------------"  ###########
                 existUpdt = True
@@ -74,37 +73,37 @@ if existUpdt:
         # svn 상태 보기
         cmd_status = "svn status"
         status_stdout = svnStatus(cmd_status)
-        print "------------svn status--------------"  ##############
+        print "------------svn status--------------"  
         for status_line in status_stdout.readlines():
                 stat = status_line.split(' ')
                 print "stat: ", stat ##############
                 if stat[0] == 'M':
                         existNew = False
-                        print "-----------search 'Modified'-------------"  ###########
+                        print "-----------search 'Modified'-------------"  
                         
                         # svn commit 적용
                         cmd_commit = "svn commit -m %s modified" %status_stdout
                         commit_stdout = svnCommit(cmd_commit)
-                        print "------------svn commit Modified-------------" ##################
+                        print "------------svn commit Modified-------------" 
                         for commit_line in commit_stdout.readlines():
                                 print commit_line
                         break
                 else:
-                        print '------------Not Modified-------------' ##############
+                        print '------------Not Modified-------------' 
                         existNew = True
 
 if existNew:
         # svn에 배포
         cmd_add = "svn add *.pyc"
         add_stdout = svnAdd(cmd_add)
-        print "-------------svn add New-------------" ################
+        print "-------------svn add New-------------" 
         for add_line in add_stdout.readlines():
                 print add_line
         
         # svn commit 적용
         cmd_commit = "svn commit -m %s" %add_stdout
         commit_stdout = svnCommit(cmd_commit)
-        print "---------------svn commit New---------------" #############
+        print "---------------svn commit New---------------" 
         for commit_line in commit_stdout.readlines():
                 print commit_line
 
