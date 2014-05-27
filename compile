@@ -108,3 +108,5 @@ if existNew:
 
 # 컴파일한 파일 삭제
 subprocess.Popen("rm -rfv *.pyc" , stdout=subprocess.PIPE, shell=True)
+
+### tests
