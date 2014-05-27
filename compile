@@ -81,6 +81,7 @@ if existUpdt:
                 stat = status_line.split(' ')
                 print "stat: ", stat ##############
                 if stat[0] == 'M':
+                        existNew = False
                         print "-----------search 'Modified'(stat[0])-------------"  ###########
                         print stat[0] ##############
                         
@@ -90,7 +91,6 @@ if existUpdt:
                         print "------------svn commit Modified-------------" ##################
                         for commit_line in commit_stdout.readlines():
                                 print commit_line
-                        existNew = False
                         break
                 else:
                         print '------------Not Modified-------------' ##############
