@@ -64,3 +64,6 @@ if result[:3] == "nok" : print "Fail..."
 else : print "Success"
 
 dict.close()
+
+
+test01
