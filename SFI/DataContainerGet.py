@@ -12,4 +12,3 @@ while (True) :
 
 dc.close()
 
-#test-01
