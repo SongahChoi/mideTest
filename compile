@@ -6,16 +6,16 @@ import glob
 import os.path
 import subprocess
 
-global existpy
-existpy = False
-global modified
-modified = False
+global existUpdt
+existUpdt = False
+global existNew
+existNew = False
 
 def gitPull(cmd):
         pull = subprocess.Popen(cmd_pull , stdout=subprocess.PIPE, shell=True)
         return pull.stdout
 
-def gitStatus(cmd):
+def svnStatus(cmd):
         status = subprocess.Popen(cmd_status , stdout=subprocess.PIPE, shell=True)
         return status.stdout
 
@@ -41,8 +41,6 @@ def compile():
                 compileName = fileName.replace(".py",".pyc")
                 subprocess.Popen("mv %s ./" %compileName, stdout=subprocess.PIPE, shell=True)
                 
-                # py파일이 있을경우 True
-                existpy = True
         #print "path: %s, dirs: %s, files: %s" %(path,dirs,files)
         
 def svnAdd(cmd):
@@ -53,38 +51,48 @@ def svnCommit(cmd):
         commit = subprocess.Popen(cmd_commit , stdout=subprocess.PIPE, shell=True)
         return commit.stdout
 
+
 # gitHub에서 데이터가져오기
 cmd_pull = "git pull"
 pull_stdout = gitPull(cmd_pull)
 for pull_line in pull_stdout.readlines():
-        print "<git pull>\n", pull_line
+        print pull_line
+        if (pull_line.split(' ').strip())[0] == 'Updating':
+                existUpdt = True
+        else:
+                print "변경된 사항이 없습니다."
+     
+if existUpdt:
+        # 하위폴더 검색 후 컴파일
+        compile()
         
-# git 상태 보기
-cmd_status = "git status"
-status_stdout = gitStatus(cmd_status)
-for status_line in status_stdout.readlines():
-        if status_line == '':
-                modified = True
+        # svn 상태 보기
+        cmd_status = "svn status"
+        status_stdout = svnStatus(cmd_status)
+        for status_line in status_stdout.readlines():
+                stat = status_line.split(' ').strip()
+                if stat[0] == 'M':
+                        # svn commit 적용
+                        cmd_commit = "svn commit -m %s modified" %status_stdout
+                        commit_stdout = svnCommit(cmd_commit)
+                        for commit_line in commit_stdout.readlines():
+                                print commit_line
+                else:
+                        existNew = True
 
-# 하위폴더 검색 후 컴파일
-compile()
-
-if existpy:
+if existNew:
         # svn에 배포
         cmd_add = "svn add *.pyc"
         add_stdout = svnAdd(cmd_add)
         for add_line in add_stdout.readlines():
                 print "<svn add>\n", add_line
-
+        
         # svn commit 적용
-        cmd_commit = "svn commit -m %s" %add_stdout
-        #print "커밋메세지: " , cmd_commit
+        cmd_commit = "svn commit -m %s" %
         commit_stdout = svnCommit(cmd_commit)
         for commit_line in commit_stdout.readlines():
-                print "<svn commit>\n", commit_line
-
-        # 컴파일한 파일 삭제
-        subprocess.Popen("rm -rfv *.pyc" , stdout=subprocess.PIPE, shell=True)
+                print commit_line
 
 
-#test01
+# 컴파일한 파일 삭제
+subprocess.Popen("rm -rfv *.pyc" , stdout=subprocess.PIPE, shell=True)
