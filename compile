@@ -90,6 +90,7 @@ if existUpdt:
                         print "------------svn commit Modified-------------" ##################
                         for commit_line in commit_stdout.readlines():
                                 print commit_line
+                        existNew = False
                         break
                 else:
                         print '------------Not Modified-------------' ##############
