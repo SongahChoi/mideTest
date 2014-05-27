@@ -67,31 +67,39 @@ for pull_line in pull_stdout.readlines():
 if existUpdt:
         # 하위폴더 검색 후 컴파일
         compile()
+        print "compile()" ############
         
         # svn 상태 보기
         cmd_status = "svn status"
         status_stdout = svnStatus(cmd_status)
+        print "svn status"  ##############
         for status_line in status_stdout.readlines():
                 stat = status_line.strip().split(' ')
+                print stat  ##############
                 if stat[0] == 'M':
+                        print stat[0] ##############
                         # svn commit 적용
                         cmd_commit = "svn commit -m %s modified" %status_stdout
                         commit_stdout = svnCommit(cmd_commit)
+                        print "svn commit modi" #############
                         for commit_line in commit_stdout.readlines():
                                 print commit_line
                 else:
+                        print 'M X' ##############
                         existNew = True
 
 if existNew:
         # svn에 배포
         cmd_add = "svn add *.pyc"
         add_stdout = svnAdd(cmd_add)
+        print "svn add new" ################
         for add_line in add_stdout.readlines():
-                print "<svn add>\n", add_line
+                print add_line
         
         # svn commit 적용
         cmd_commit = "svn commit -m %s" %add_stdout
         commit_stdout = svnCommit(cmd_commit)
+        print "svn commit new" #############
         for commit_line in commit_stdout.readlines():
                 print commit_line
 
