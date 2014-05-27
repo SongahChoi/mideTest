@@ -59,7 +59,8 @@ for pull_line in pull_stdout.readlines():
         print pull_line
         pull = pull_line.split(' ')
         print "----------git pull------------"   ###########
-        if pull[0] == '*.py':
+        print "pull[0]: ",pull[0]  ################
+        if pull[0].split('.')[1] == 'py':
                 print "-----------search Updating------------"  ###########
                 existUpdt = True
                 break
