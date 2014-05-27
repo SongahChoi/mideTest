@@ -76,7 +76,7 @@ if existUpdt:
         status_stdout = svnStatus(cmd_status)
         print "svn status"  ##############
         for status_line in status_stdout.readlines():
-                stat = status_line.split(' ').strip()
+                stat = status_line.strip().split(' ')
                 print stat  ##############
                 if stat[0] == 'M':
                         print stat[0] ##############
