@@ -67,3 +67,4 @@ dict.close()
 
 
 test01
+test02
