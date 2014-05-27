@@ -60,6 +60,7 @@ for pull_line in pull_stdout.readlines():
         pull = pull_line.strip().split(' ')
         if pull[0] == 'Updating':
                 existUpdt = True
+                break
         else:
                 print "변경된 사항이 없습니다."
      
@@ -71,7 +72,7 @@ if existUpdt:
         cmd_status = "svn status"
         status_stdout = svnStatus(cmd_status)
         for status_line in status_stdout.readlines():
-                stat = status_line.split(' ').strip()
+                stat = status_line.strip().split(' ')
                 if stat[0] == 'M':
                         # svn commit 적용
                         cmd_commit = "svn commit -m %s modified" %status_stdout
