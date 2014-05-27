@@ -76,11 +76,10 @@ if existUpdt:
         print "------------svn status--------------"  
         for status_line in status_stdout.readlines():
                 stat = status_line.split(' ')
-                print "stat: ", stat ##############
+                print "stat[1]: ", stat[1] ##############
                 if stat[0] == 'M':
                         existNew = False
-                        print "-----------search 'Modified'-------------"  
-                        
+
                         # svn commit 적용
                         cmd_commit = "svn commit -m %s modified" %status_stdout
                         commit_stdout = svnCommit(cmd_commit)
