@@ -60,12 +60,11 @@ for pull_line in pull_stdout.readlines():
         pull = pull_line.split(' ')
         print "----------git pull------------"   ###########
         print "pull[0]: ",pull[0]  ################
-        if pull[0].strip() == '*.py':
+        if pull[0] == 'Updating':
                 print "-----------search Updating------------"  ###########
                 existUpdt = True
                 break
-        else:
-                print "변경된 사항이 없습니다."
+
      
 if existUpdt:
         # 하위폴더 검색 후 컴파일
